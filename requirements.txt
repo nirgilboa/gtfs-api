@@ -1,4 +1,5 @@
 Django==2.2.8
 django-extensions==2.2.5
+ipython==7.11.1
 psycopg2-binary==2.8.4
 -e git+git://github.com/nirgilboa/django-multi-gtfs#egg=multigtfs
