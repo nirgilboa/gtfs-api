@@ -1,9 +1,12 @@
 import datetime
 
 from django.contrib.gis.geos import Point
+from django.utils import timezone
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.viewsets import GenericViewSet
+
+from . import logic
 
 
 class StationViewSet(GenericViewSet):
@@ -18,8 +21,8 @@ class StationViewSet(GenericViewSet):
             raise ValidationError(detail="lat is required")
         if long is None:
             raise ValidationError(detail='long is required')
-        if timestamp is None:
-            raise ValidationError(detail='timestamp is required')
+        if epoch_timestamp is None:
+            raise ValidationError(detail='epoch_timestamp is required')
         if route is None:
             raise ValidationError(detail='route is required')
 
@@ -28,9 +31,15 @@ class StationViewSet(GenericViewSet):
         except (TypeError, ValueError):
             raise ValidationError(detail='Invalid lat/long coordinates')
 
-        datetime.datetime.fromtimestamp(epoch_timestamp)
+        dt = datetime.datetime.fromtimestamp(epoch_timestamp)
+        dt = timezone.get_default_timezone().localize(dt)
 
+        stop_times = logic.search_by_route(
+            dt=dt,
+            point=point,
+        )
 
+        
 
 
 
