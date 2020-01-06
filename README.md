@@ -24,4 +24,16 @@ Public transportantion REST API over [django-multi-gtfs](https://github.com/tuls
     ```
 Note: This might require installation of postgis
 
+# Importing GTFS data
 
+1. Get a GTFS feed
+
+    `wget https://s3-eu-west-1.amazonaws.com/s3.obus.hasadna.org.il/2019-09-09.zip `
+    
+    Note: This feed is provided by the OpenBus project and will take a while to load
+
+2. Import
+
+    `./manage.py importgtfs --name gtfsfeed 2019-09-09.zip`
+   
+3. 
